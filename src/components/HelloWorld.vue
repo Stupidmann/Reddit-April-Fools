@@ -1,58 +1,76 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div>
+    <div>
+      segundos restantes: {{ minute }}
+    </div>
+    <button @click="stopTimer">Stop</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
+  name: 'ButtonContainer',
+  data() {
+    return {
+      timer: undefined,
+      minute: 60,
+      colors: ['purple', 'blue', 'green', 'yellow', 'orange', 'red', 'grey', 'white'],
+    };
+  },
+
+  methods: {
+    startTimer(){
+      this.timer = setInterval(() => {
+          this.minute--;
+      }, 1000);
+    },
+
+    setColor() {
+      console.log(this.colors);
+    },
+
+    stopTimer() {
+      clearInterval(this.timer);
+    }
+  },
+
+  created() {
+    this.startTimer();
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+.purple {
+  color: #821480;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+.blue {
+  color: #0083c7;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+
+.green {
+  color: #02be01;
 }
-a {
-  color: #42b983;
+
+.yellow {
+  color: #e5d901;
+}
+
+.orange {
+ color: #e59501;
+}
+
+.red {
+  color: #e51000;
+}
+
+.grey {
+  color: #888888;
+}
+
+.white {
+  color: #e4e4e4;
 }
 </style>
