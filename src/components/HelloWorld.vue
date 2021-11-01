@@ -3,7 +3,9 @@
     <div>
       segundos restantes: {{ minute }}
     </div>
-    <button @click="stopTimer">Stop</button>
+    <div :class="selectedColor">
+      <button button @click="stopTimer" class="">Stop</button>
+    </div>
   </div>
 </template>
 
@@ -15,6 +17,7 @@ export default {
       timer: undefined,
       minute: 60,
       colors: ['purple', 'blue', 'green', 'yellow', 'orange', 'red', 'grey', 'white'],
+      selectedColor: '',
     };
   },
 
@@ -26,11 +29,36 @@ export default {
     },
 
     setColor() {
-      console.log(this.colors);
+      let color = '';
+      switch (true) {
+        case (this.minute >= 52):
+          color = `.${this.colors[0]}`;
+          break;
+        case (this.minute >= 42):
+          color = `.${this.colors[1]}`;
+          break;
+        case (this.minute >= 32):
+          color = `.${this.colors[2]}`;
+          break;
+        case (this.minute >= 22):
+          color = `.${this.colors[3]}`;
+          break;
+        case (this.minute >= 12):
+          color = `.${this.colors[4]}`;
+          break;
+        case (this.minute >= 0):
+          color = `.${this.colors[5]}`;
+          break;
+        default: 
+          color = 'default'
+      }
+
+      console.log(color);
     },
 
     stopTimer() {
       clearInterval(this.timer);
+      this.setColor();
     }
   },
 
