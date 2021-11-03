@@ -1,0 +1,39 @@
+.btn--purple {
+  background-color: #821480;
+  color: white;
+}
+
+.btn--blue {
+  background-color: #0083c7;
+  color: white;
+}
+
+.btn--green {
+  background-color: #02be01;
+  color: white;
+}
+
+.btn--yellow {
+  background-color: #e5d901;
+  color: white;
+}
+
+.btn--orange {
+ background-color: #e59501;
+ color: white;
+}
+
+.btn--red {
+  background-color: #e51000;
+  color: white;
+}
+
+.btn--grey {
+  background-color: #888888;
+  color: black;
+}
+
+.btn--white {
+  background-color: #e4e4e4;
+  color: black;
+}

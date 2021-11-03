@@ -3,22 +3,34 @@
     <div>
       segundos restantes: {{ minute }}
     </div>
-    <div :class="selectedColor">
-      <button button @click="stopTimer" class="">Stop</button>
-    </div>
+    <customButton @click="stopTimer" :class="selectedColor">Stop</customButton>
   </div>
 </template>
 
 <script>
+import customButton from '@/components/customButton';
+
 export default {
   name: 'ButtonContainer',
+
+  components: {
+    customButton,
+  },
+
   data() {
     return {
       timer: undefined,
       minute: 60,
-      colors: ['purple', 'blue', 'green', 'yellow', 'orange', 'red', 'grey', 'white'],
       selectedColor: '',
     };
+  },
+
+  watch: {
+    minute: function () {
+      if( this.minute === 0 ) {
+        this.stopTimer();
+      }
+    },
   },
 
   methods: {
@@ -32,28 +44,21 @@ export default {
       let color = '';
       switch (true) {
         case (this.minute >= 52):
-          color = `.${this.colors[0]}`;
-          break;
+          color = 'btn--purple'; break;
         case (this.minute >= 42):
-          color = `.${this.colors[1]}`;
-          break;
+          color = 'btn--blue'; break;
         case (this.minute >= 32):
-          color = `.${this.colors[2]}`;
-          break;
+          color = 'btn--green'; break;
         case (this.minute >= 22):
-          color = `.${this.colors[3]}`;
-          break;
+          color = 'btn--yellow'; break;
         case (this.minute >= 12):
-          color = `.${this.colors[4]}`;
-          break;
-        case (this.minute >= 0):
-          color = `.${this.colors[5]}`;
-          break;
+          color = 'btn--orange'; break;
+        case (this.minute > 0):
+          color = 'btn--red'; break;
         default: 
-          color = 'default'
+          color = 'btn--white'; break;
       }
-
-      console.log(color);
+      this.selectedColor = color;
     },
 
     stopTimer() {
@@ -67,38 +72,3 @@ export default {
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.purple {
-  color: #821480;
-}
-
-.blue {
-  color: #0083c7;
-}
-
-.green {
-  color: #02be01;
-}
-
-.yellow {
-  color: #e5d901;
-}
-
-.orange {
- color: #e59501;
-}
-
-.red {
-  color: #e51000;
-}
-
-.grey {
-  color: #888888;
-}
-
-.white {
-  color: #e4e4e4;
-}
-</style>
