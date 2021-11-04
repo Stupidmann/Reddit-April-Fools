@@ -2,7 +2,7 @@
   <button class="btn"
           :class="[
             `btn--${color}`,
-            `btn--${size}`,
+            `btn-${size}`,
           ]"
           :disabled="disabled"
           :type="action"
