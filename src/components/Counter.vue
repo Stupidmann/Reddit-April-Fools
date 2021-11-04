@@ -13,7 +13,7 @@
           @click="stopTimer"
           :disabled="disabled"
           :class="disabled ? 'btn--white' : selectedColor">
-          Stop
+          Detener
         </CustomButton>
       </div>
 
@@ -21,14 +21,34 @@
         <div class="mb-4">
           <CustomButton @click="countClicks">Mostrar promedios</CustomButton>
         </div>
-        <div v-if="showResetButton">
-          <CustomButton @click="deleteMyClick" size="sm">Reset</CustomButton>
-        </div>
       </div>
       
       <div v-if="Object.keys(average).length">
         <!-- TODO: create component to display average -->
-        {{ average }}
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Purpura</th>
+              <th scope="col">Azul</th>
+              <th scope="col">Verde</th>
+              <th scope="col">Amarillo</th>
+              <th scope="col">Naranja</th>
+              <th scope="col">Rojo</th>
+              <th scope="col">Gris</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">#</th>
+              <td  v-for="(clicks, index) in average" :key="index">{{ clicks }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div v-if="showResetButton">
+        <CustomButton @click="deleteMyClick" size="sm">Reset</CustomButton>
       </div>
     </div>
   </div>
@@ -60,7 +80,6 @@ export default {
       if( this.second === this.generatedNumber || this.second === 0 ) {
         this.resetTimer();
         this.generatedNumber = this.generateRandomNumber();
-        console.log(this.generatedNumber);
       }
     },
   },
@@ -97,7 +116,6 @@ export default {
       localStorage.setItem('myClick', JSON.stringify({myClick: true}));
       clearInterval(this.timer);
       this.setColor();
-      this.generateReport();
     },
 
     resetTimer() {
@@ -115,12 +133,6 @@ export default {
 
     generateRandomNumber(min = 0, max = 60) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
-    },
-
-    generateReport() {
-      const clicks = JSON.parse(localStorage.getItem('clicks'));
-      this.average = parseInt(clicks.reduce((a, b) => a + b) / clicks.length, 10);
-      this.showResetButton = true;
     },
 
     countClicks() {
@@ -155,6 +167,7 @@ export default {
       });
 
       this.average = average;
+      this.showResetButton = true;
     }
   },
 
