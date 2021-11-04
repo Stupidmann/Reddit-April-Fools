@@ -28,15 +28,18 @@ export default {
   },
 
   props: {
-    seconds: {
+    stopAt: {
       type: Number,
-      default: 60,
+      default: undefined,
     }
   },
 
   watch: {
     second: function () {
       if( this.second === 0 ) {
+        this.stopTimer();
+      }
+      if (this.stopAt && this.stopAt === this.second) {
         this.stopTimer();
       }
     },
