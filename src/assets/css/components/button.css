@@ -1,0 +1,57 @@
+button.btn {
+  border: 1px solid;
+  color: #333;
+  padding: 16px 24px;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all .3s ease;
+  background: #F3F3F3;
+}
+
+.btn--purple {
+  background: #821480 !important;
+  border: 1px solid;
+  color: white !important;
+}
+
+.btn--blue {
+  background: #0083c7 !important;
+  border: 1px solid;
+  color: white !important;
+}
+
+.btn--green {
+  background: #02be01 !important;
+  border: 1px solid;
+  color: black !important;
+}
+
+.btn--yellow {
+  background: #e5d901 !important;
+  border: 1px solid;
+  color: black !important;
+}
+
+.btn--orange {
+  background: #e59501 !important;
+  border: 1px solid;
+  color: black !important;
+}
+
+.btn--red {
+  background: #e51000 !important;
+  border: 1px solid;
+  color: white !important;
+}
+
+.btn--grey {
+  background: #888888 !important;
+  border: 1px solid;
+  color: black !important;
+}
+
+.btn--white {
+  background: #e4e4e4 !important;
+  color: black;
+}
