@@ -12,18 +12,12 @@
         <CustomButton
           @click="stopTimer"
           :disabled="disabled"
-          :class="disabled ? 'btn--white' : selectedColor">
+          :class="selectedColor">
           Detener
         </CustomButton>
       </div>
-
-      <div v-if="disabled">
-        <div class="mb-4">
-          <CustomButton @click="countClicks">Mostrar promedios</CustomButton>
-        </div>
-      </div>
       
-      <div v-if="Object.keys(average).length">
+      <div v-if="showAverageTable && Object.keys(average).length">
         <!-- TODO: create component to display average -->
         <table class="table">
           <thead>
@@ -41,12 +35,13 @@
           <tbody>
             <tr>
               <th scope="row">#</th>
-              <td  v-for="(clicks, index) in average" :key="index">{{ clicks }}</td>
+              <td v-for="(clicks, index) in average" :key="index">{{ clicks }}</td>
             </tr>
           </tbody>
         </table>
       </div>
 
+      <!-- <div> -->
       <div v-if="showResetButton">
         <CustomButton @click="deleteMyClick" size="sm">Reset</CustomButton>
       </div>
@@ -72,6 +67,7 @@ export default {
       disabled: false,
       average: {},
       showResetButton: false,
+      showAverageTable: false,
     };
   },
 
@@ -113,12 +109,18 @@ export default {
     },
 
     stopTimer() {
+      const clicks = JSON.parse(localStorage.getItem('clicks'));
+      clicks.push(this.second);
+      localStorage.setItem('clicks', JSON.stringify(clicks));
       localStorage.setItem('myClick', JSON.stringify({myClick: true}));
       clearInterval(this.timer);
       this.setColor();
+      this.disabled = true;
+      this.countClicks();
     },
 
     resetTimer() {
+      this.countClicks();
       const clicks = JSON.parse(localStorage.getItem('clicks'));
       clicks.push(this.second);
       localStorage.setItem('clicks', JSON.stringify(clicks));
@@ -129,6 +131,13 @@ export default {
     deleteMyClick() {
       localStorage.setItem('myClick', JSON.stringify({myClick: false}));
       localStorage.setItem('clicks', JSON.stringify([]));
+      this.disabled = false;
+      this.showResetButton = false;
+      this.showAverageTable = false;
+      this.timer = undefined;
+      this.second = 60;
+      this.selectedColor = '';
+      this.startTimer();
     },
 
     generateRandomNumber(min = 0, max = 60) {
@@ -168,12 +177,20 @@ export default {
 
       this.average = average;
       this.showResetButton = true;
+      this.showAverageTable = true;
     }
   },
 
   created() {
     this.startTimer();
-    this.disabled = JSON.parse(localStorage.getItem('myClick')).myClick;
+    const myClick = JSON.parse(localStorage.getItem('myClick'));
+    if (myClick) {
+      this.disabled = myClick.myClick;
+      if (this.disabled) {
+        this.countClicks();
+        this.showAverageTable = true;
+      }
+    }
     this.generatedNumber = this.generateRandomNumber();
   }
 }
