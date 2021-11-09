@@ -1,4 +1,4 @@
-# base-proyect
+# base-project
 
 ## Project setup
 ```
